@@ -1,0 +1,32 @@
+# Start by ignoring all
+
+*
+/*
+**/*
+
+# Ignore all files named .DS_Store or ending with .log
+**/.DS_Store
+**.log
+
+# Not ignore file I want to push
+
+!d-mysql
+!d-nginx
+!d-php
+!build/
+!build/**
+!nginx/
+!nginx/**
+!php/
+!php/*
+!mysql/
+!mysql/**
+mysql/db/
+!mysql/scripts/*
+
+# End by ignoring git files
+
+**/.git
+**/.gitignore
+!.gitignore
+!README.md

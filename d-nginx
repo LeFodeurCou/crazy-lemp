@@ -1,0 +1,20 @@
+#!/bin/bash
+
+docker network create web-containers 2> /dev/null
+
+docker build \
+	-t nginx \
+	./nginx
+
+docker run \
+	-d \
+	--rm \
+	--name nginx \
+	--network web-containers \
+	-p 80:80 \
+	-p 443:443 \
+	-v ${PWD}/build:/usr/share/nginx/html \
+	-v ${PWD}/nginx/default.conf:/etc/nginx/nginx.conf \
+	-v ${PWD}/nginx/sites-available:/etc/nginx/sites-available \
+	-v ${PWD}/nginx/sites-enabled:/etc/nginx/sites-enabled \
+	nginx

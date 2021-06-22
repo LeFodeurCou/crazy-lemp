@@ -1,0 +1,56 @@
+#!/bin/bash
+
+# function trap_ctrlc()
+# 	{
+# 		echo '';
+# 		echo 'Stoping docker container ...';
+# 		docker stop mysql;
+# 		if service --status-all | grep -Fq 'mysql';
+# 		then
+# 			echo 'Launching mysql on the computer';
+# 			sudo service mysql start;
+# 		fi
+# 		exit 0;
+# 	}
+
+version=5.7.31
+for arg in "$@"; do
+	if [ "$arg" = "5.6" ]
+	then
+		version=5.6
+	elif [ "$arg" = "8.0" ]
+	then
+		version=8.0
+	fi
+done
+
+# trap "trap_ctrlc" 2
+
+docker network create web-containers 2> /dev/null
+
+if service --status-all | grep -Fq 'mysql';
+then
+	echo 'Stoping mysql on the computer ...';
+	sudo service mysql stop;
+	# sudo pkill mysqld;
+fi
+echo 'Launching docker container ...'
+mkdir -p ${PWD}/mysql/db/$version
+docker run \
+	-d \
+	--rm \
+	--name mysql \
+	--network web-containers \
+	-p 3306:3306 \
+	-v ${PWD}/mysql/db/$version:/var/lib/mysql/ \
+	-v ${PWD}/mysql/scripts:/scripts/ \
+	-e MYSQL_ROOT_PASSWORD="webapproot" \
+	mysql:$version
+
+docker exec mysql sh -c 'mysql -u root -pwebapproot < scripts/init.sql' 2> /dev/null
+
+# while :
+# do
+# 	echo "Hit [CTRL+C] to stop!";
+# 	read default;
+# done

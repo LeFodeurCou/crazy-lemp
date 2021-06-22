@@ -1,0 +1,24 @@
+#!/bin/bash
+
+version=php:7.4-fpm-alpine
+for arg in "$@"; do
+	if [ "$arg" = "8.0" ]
+	then
+		version=php:8.0-fpm-alpine
+	fi
+done
+
+docker network create web-containers 2> /dev/null;
+
+docker build \
+	-t web-php \
+	--build-arg VERSION=$version \
+	./php
+
+docker run \
+	-d \
+	--rm \
+	--name web-php \
+	--network web-containers \
+	-v ${PWD}/build:/script:ro \
+	web-php
