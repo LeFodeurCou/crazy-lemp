@@ -1,5 +1,8 @@
 #!/bin/bash
 
+ln -sf nginx/sites-available/lefodeurcou.local.conf nginx/sites-enabled/
+ln -sf nginx/sites-available/lefodeurcou.fr.conf nginx/sites-enabled/
+
 docker network create web-containers 2> /dev/null
 
 docker build \
