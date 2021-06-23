@@ -1,0 +1,39 @@
+#!/bin/bash
+
+if [ -z "$1" ]
+then
+	echo "";
+	echo 'Missing command ...' >&2;
+		echo 'Normal use : lemp command [args...]' >&2;
+	echo "";
+	exit 1;
+fi
+
+arg=''
+if [ -n "$2" ]
+then
+	arg="$2";
+fi
+
+if [ "$1" = "stop" ]
+then
+	./bin/d-stop "$arg";
+elif [ "$1" = "run" ]
+then
+	./bin/d-run "$arg";
+elif [ "$1" = "php" ]
+then
+	./bin/d-php "$arg";
+elif [ "$1" = "mysql" ]
+then
+	./bin/d-mysql "$arg";
+elif [ "$1" = "nginx" ]
+then
+	./bin/d-nginx "$arg";
+elif [ "$1" = "list" ]
+then
+	docker ps -a
+elif [ "$1" = "reset" ]
+then
+	./bin/d-reset
+fi

@@ -10,9 +10,8 @@
 
 # Not ignore file I want to push
 
-!d-mysql
-!d-nginx
-!d-php
+
+!lemp
 !bin/
 !bin/**
 !build/
