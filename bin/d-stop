@@ -1,0 +1,24 @@
+#!/bin/bash
+
+stop='all'
+for arg in "$@"; do
+	if [ "$arg" = "mysql" ]
+	then
+		stop='mysql';
+	elif [ "$arg" = "php" ]
+	then
+		stop='php';
+	elif [ "$arg" = "nginx" ]
+	then
+		stop='nginx';
+	fi
+done
+
+if [ "$stop" = "all" ]
+then
+	docker stop nginx 2> /dev/null;
+	docker stop php 2> /dev/null;
+	docker stop mysql 2> /dev/null;
+else
+	docker stop "$stop" 2> /dev/null;
+fi

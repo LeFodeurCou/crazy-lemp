@@ -13,6 +13,8 @@
 !d-mysql
 !d-nginx
 !d-php
+!bin/
+!bin/**
 !build/
 !build/**
 !nginx/
