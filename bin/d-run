@@ -1,0 +1,31 @@
+#!/bin/bash
+
+run='all'
+for arg in "$@"; do
+	if [ "$arg" = "mysql" ]
+	then
+		run='mysql';
+	elif [ "$arg" = "php" ]
+	then
+		run='php';
+	elif [ "$arg" = "nginx" ]
+	then
+		run='nginx';
+	fi
+done
+
+if [ "$run" = "all" ]
+then
+	./bin/d-php 8.0
+	./bin/d-mysql 8.0
+	./bin/d-nginx
+elif [ "$run" = "php" ]
+then
+	./bin/d-php 8.0
+elif [ "$run" = "mysql" ]
+then
+	./bin/d-mysql 8.0
+elif [ "$run" = "nginx" ]
+then
+	./bin/d-nginx
+fi
