@@ -18,7 +18,7 @@ docker build \
 docker run \
 	-d \
 	--rm \
-	--name web-php \
+	--name php \
 	--network web-containers \
 	-v ${PWD}/build:/script:ro \
 	web-php
