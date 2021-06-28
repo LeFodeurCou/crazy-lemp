@@ -39,4 +39,8 @@ then
 elif [ "$1" = "ssl" ]
 then
 	./bin/d-letsencrypt
+else
+	echo "" >&2;
+		echo "$1 is not a valid argument" >&2;
+	echo "" >&2;
 fi
