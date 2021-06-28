@@ -1,13 +1,5 @@
 #!/bin/bash
 
-version=php:7.4-fpm-alpine
-for arg in "$@"; do
-	if [ "$arg" = "8.0" ]
-	then
-		version=php:8.0-fpm-alpine
-	fi
-done
-
 docker network create web-containers 2> /dev/null;
 
 if service --status-all | grep -Fq 'apache2';
@@ -24,8 +16,8 @@ fi
 
 docker build \
 	-t php \
-	--build-arg VERSION=$version \
-	./php
+	--build-arg VERSION='php:'$1'-fpm-alpine' \
+	./lemp.core/php
 
 docker run \
 	-d \

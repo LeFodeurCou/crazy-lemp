@@ -1,0 +1,23 @@
+#!/bin/bash
+
+ln -sf lemp.core/nginx/sites-available/lefodeurcou.local.conf nginx/sites-enabled/
+ln -sf lemp.core/nginx/sites-available/lefodeurcou.fr.conf nginx/sites-enabled/
+
+docker network create web-containers 2> /dev/null
+
+docker build \
+	-t nginx \
+	./lemp.core/nginx
+
+docker run \
+	-d \
+	--rm \
+	--name nginx \
+	--network web-containers \
+	-p 80:80 \
+	-p 443:443 \
+	-v ${PWD}/build:/usr/share/nginx/html \
+	-v ${PWD}/lemp.core/nginx/default.conf:/etc/nginx/nginx.conf \
+	-v ${PWD}/lemp.core/nginx/sites-available:/etc/nginx/sites-available \
+	-v ${PWD}/lemp.core/nginx/sites-enabled:/etc/nginx/sites-enabled \
+	nginx

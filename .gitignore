@@ -12,18 +12,20 @@
 
 
 !lemp
-!bin/
-!bin/**
+!lemp.bin/
+!lemp.bin/**
+!lemp.core/
+!lemp.core/**
 !build/
 !build/**
-!nginx/
-!nginx/**
-!php/
-!php/*
-!mysql/
-!mysql/**
-mysql/db/
-!mysql/scripts/*
+# !nginx/
+# !nginx/**
+# !php/
+# !php/*
+# !mysql/
+# !mysql/**
+lemp.core/mysql/db/
+# !mysql/scripts/*
 
 # End by ignoring git files
 

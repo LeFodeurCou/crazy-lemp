@@ -1,0 +1,39 @@
+#!/bin/bash
+
+source ./lemp.env
+
+cat > lemp.core/mysql/scripts/init.sql <<EOF
+create user if not exists '$mysqlUser'@'$mysqlHost' identified by '$mysqlPassword';
+
+create database if not exists \`$mysqlDatabase\`;
+
+use $mysqlDatabase;
+
+grant all privileges on \`$mysqlDatabase\` to '$mysqlUser'@'$mysqlHost';
+grant all privileges on \`$mysqlDatabase\`.* to '$mysqlUser'@'$mysqlHost';
+EOF
+
+docker network create web-containers 2> /dev/null
+
+if service --status-all | grep -Fq 'mysql';
+then
+	echo 'Stoping mysql on the computer ...';
+	sudo service mysql stop;
+	# sudo pkill mysqld;
+fi
+echo 'Launching docker container ...'
+mkdir -p ${PWD}/lemp.core/mysql/db/$mysqlVersion
+docker run \
+	-d \
+	--rm \
+	--name mysql \
+	--network web-containers \
+	-p 3306:3306 \
+	-v ${PWD}/lemp.core/mysql/db/$mysqlVersion:/var/lib/mysql/ \
+	-v ${PWD}/lemp.core/mysql/scripts:/scripts/ \
+	-e MYSQL_ROOT_PASSWORD="$mysqlRootPassword" \
+	mysql:$mysqlVersion
+
+until docker exec mysql sh -c "mysql -u root -p$mysqlRootPassword < scripts/init.sql" 2> /dev/null; do
+	sleep 0.5;
+done;

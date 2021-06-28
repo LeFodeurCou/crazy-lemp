@@ -17,28 +17,28 @@ fi
 
 if [ "$1" = "stop" ]
 then
-	./bin/d-stop "$arg";
+	./lemp.bin/d-stop "$arg";
 elif [ "$1" = "run" ]
 then
-	./bin/d-run "$arg";
+	./lemp.bin/d-run "$arg";
 elif [ "$1" = "php" ]
 then
-	./bin/d-php "$arg";
+	./lemp.bin/d-php "$arg";
 elif [ "$1" = "mysql" ]
 then
-	./bin/d-mysql "$arg";
+	./lemp.bin/d-mysql "$arg";
 elif [ "$1" = "nginx" ]
 then
-	./bin/d-nginx "$arg";
+	./lemp.bin/d-nginx "$arg";
 elif [ "$1" = "list" ]
 then
 	docker ps -a
 elif [ "$1" = "reset" ]
 then
-	./bin/d-reset
+	./lemp.bin/d-reset
 elif [ "$1" = "ssl" ]
 then
-	./bin/d-letsencrypt
+	./lemp.bin/d-letsencrypt
 else
 	echo "" >&2;
 		echo "$1 is not a valid argument" >&2;

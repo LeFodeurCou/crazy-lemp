@@ -1,7 +1,0 @@
-#!/bin/bash
-
-./bin/d-stop
-
-docker system prune -fa
-
-cp nginx/sites-available/lefodeurcou.fr.src nginx/sites-available/lefodeurcou.fr.conf

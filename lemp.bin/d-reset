@@ -1,0 +1,7 @@
+#!/bin/bash
+
+./lemp.bin/d-stop
+
+docker system prune -fa
+
+cp lemp.core/nginx/sites-available/lefodeurcou.fr.src lemp.core/nginx/sites-available/lefodeurcou.fr.conf

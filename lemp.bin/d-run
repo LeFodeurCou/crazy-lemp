@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source ./lemp.env
+
 run='all'
 for arg in "$@"; do
 	if [ "$arg" = "mysql" ]
@@ -16,16 +18,16 @@ done
 
 if [ "$run" = "all" ]
 then
-	./bin/d-php 8.0
-	./bin/d-mysql 8.0
-	./bin/d-nginx
+	./lemp.bin/d-php $phpVersion
+	./lemp.bin/d-mysql $mysqlVersion
+	./lemp.bin/d-nginx
 elif [ "$run" = "php" ]
 then
-	./bin/d-php 8.0
+	./lemp.bin/d-php $phpVersion
 elif [ "$run" = "mysql" ]
 then
-	./bin/d-mysql 8.0
+	./lemp.bin/d-mysql $mysqlVersion
 elif [ "$run" = "nginx" ]
 then
-	./bin/d-nginx
+	./lemp.bin/d-nginx
 fi
