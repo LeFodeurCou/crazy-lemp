@@ -36,4 +36,7 @@ then
 elif [ "$1" = "reset" ]
 then
 	./bin/d-reset
+elif [ "$1" = "ssl" ]
+then
+	./bin/d-letsencrypt
 fi
