@@ -10,6 +10,18 @@ done
 
 docker network create web-containers 2> /dev/null;
 
+if service --status-all | grep -Fq 'apache2';
+then
+	echo 'Stoping apache2 on the computer ...';
+	sudo service apache2 stop;
+fi
+
+if service --status-all | grep -Fq 'nginx';
+then
+	echo 'Stoping nginx on the computer ...';
+	sudo service nginx stop;
+fi
+
 docker build \
 	-t web-php \
 	--build-arg VERSION=$version \
