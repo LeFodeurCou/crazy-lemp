@@ -23,7 +23,7 @@ then
 fi
 
 docker build \
-	-t web-php \
+	-t php \
 	--build-arg VERSION=$version \
 	./php
 
@@ -33,4 +33,4 @@ docker run \
 	--name php \
 	--network web-containers \
 	-v ${PWD}/build:/script:ro \
-	web-php
+	php
