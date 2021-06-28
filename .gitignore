@@ -12,6 +12,7 @@
 
 
 !lemp
+!lemp.env
 !lemp.bin/
 !lemp.bin/**
 !lemp.core/
