@@ -4,7 +4,7 @@ if [ -z "$1" ]
 then
 	echo "";
 	echo 'Missing command ...' >&2;
-		echo 'Normal use : lemp command [args...]' >&2;
+		echo 'Normal use : lemp [command...] [args...]' >&2;
 	echo "";
 	exit 1;
 fi
@@ -23,13 +23,13 @@ then
 	./lemp.bin/d-run "$arg";
 elif [ "$1" = "php" ]
 then
-	./lemp.bin/d-php "$arg";
+	./lemp.bin/d-php;
 elif [ "$1" = "mysql" ]
 then
-	./lemp.bin/d-mysql "$arg";
+	./lemp.bin/d-mysql;
 elif [ "$1" = "nginx" ]
 then
-	./lemp.bin/d-nginx "$arg";
+	./lemp.bin/d-nginx;
 elif [ "$1" = "list" ]
 then
 	docker ps -a
@@ -39,8 +39,26 @@ then
 elif [ "$1" = "ssl" ]
 then
 	./lemp.bin/d-letsencrypt
+elif [ "$1" = "help" -o "$1" = "h" ]
+then
+	echo "Usage: `basename $0` [command...] [args...]";
+	echo;
+	printf "%-3s %-8s %-20s %-30s\n" "" "run" "{php|mysql|nginx}" "Without args runs all containers, else runs specific container";
+	printf "%-3s %-8s %-20s %-30s\n" "" "stop" "{php|mysql|nginx}" "Without args stops all containers, else stops specific container";
+	printf "%-3s %-8s %-20s %-30s\n" "" "php" "" "Runs php container";
+	printf "%-3s %-8s %-20s %-30s\n" "" "mysql" "" "Runs mysql container";
+	printf "%-3s %-8s %-20s %-30s\n" "" "nginx" "" "Runs nginx container";
+	printf "%-3s %-8s %-20s %-30s\n" "" "list" "" "Lists all docker containers";
+	printf "%-3s %-8s %-20s %-30s\n" "" "reset" "" "Use \`lemp stop\` and \`docker system prune -fa\` then reset nginx site available conf file";
+	printf "%-3s %-8s %-20s %-30s\n" "" "ssl" "" "Setup ssl connexion throught Letsencrypt";
+	echo;
+	echo "See lemp.env to change configuration variables"
+	echo;
 else
 	echo "" >&2;
 		echo "$1 is not a valid argument" >&2;
 	echo "" >&2;
+	exit 1;
 fi
+
+exit 0;
